@@ -19,3 +19,7 @@
   @JsonFormat(pattern = "yyyy-MM-dd")
   private Date enddate;
   ```
+### 2、Spring 无法注入依赖包的实例
+	原因：对于容器而言，如@Autowired@component等注解都是针对项目工程下资源告诉容器工程中的实例可以访问并加载进入容器，但第三方的包实例需用@Import注解将这些包实例数据导入
+
+
