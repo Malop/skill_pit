@@ -61,9 +61,9 @@ public static void getInt(){
 	问题描述：监控系统发现在存储数据的方法上，对redis进行了setnx()和get()操作，两个操作总共消耗约1.5ms，然后存储数据的方法平均耗时有3.74ms，多出的2ms无解
 	实践：监控系统的原理是对redis的get方法做代理，从发送命令到同步读取数据完成，所以io时间不再监控范围内。用jconcle模拟线上排查，发现改方法在除了setnx跟get后，在获取连接的时候消耗了大量时间。
 	解决方案:修改redis连接池配置：
-	设置mindle=1，保证至少有一个可用的连接，
-	设置testOnBorrow=false，testOnReturn=false，减少不必要的IO请求
-	设置testWhileIdle=true，保证连接的可用性，定期检查空闲连接的状态
+	* 设置mindle=1，保证至少有一个可用的连接，
+	* 设置testOnBorrow=false，testOnReturn=false，减少不必要的IO请求
+	* 设置testWhileIdle=true，保证连接的可用性，定期检查空闲连接的状态
 	在jedisFactory的源码可以看出在获取连接池连接的时候会发送ping指令到redis集群，浪费io不必要的时间，所以需要配置testOnBorrow与testOnResturn属性为false
 
 
