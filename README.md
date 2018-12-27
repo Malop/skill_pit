@@ -66,7 +66,7 @@ public static void getInt(){
 	* 设置testWhileIdle=true，保证连接的可用性，定期检查空闲连接的状态
 	在jedisFactory的源码可以看出在获取连接池连接的时候会发送ping指令到redis集群，浪费io不必要的时间，所以需要配置testOnBorrow与testOnResturn属性为false
 
-
+### 6、ZK作为一个注册中心有什么优缺点？说一说CAP？
 	
 	
 	
