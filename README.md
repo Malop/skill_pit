@@ -83,3 +83,8 @@ ZK对强一致性的要求较高
 
 ### 11、页面静态化方案：缓存方案。ESI/CSI/SSI
 
+### 12、myBatis懒加载问题
+	问题描述:myBatis配置懒加载之后，在test时发现打印出来实体时懒加载并未生效，debug加断点也捕捉不到
+	排查：查看源码发现，myBatis在懒加载时默认对触发的hashcode,requals,clone,toString方法就会执行懒加载，而test断点debug时，是新起一个线程去加载代码，在打印实体类时，调用了hashcode和toString方法，这时就触发了懒加载
+	解决方案:配置懒加载出发方法configuration.setLazyLoadTriggerMethods(new HashSet<String>());
+	还有就是用mybatis的默认debug级别日志，查看sql语句来判断懒加载是否生效
